@@ -14,9 +14,11 @@
     </head>
     <body class="bg-[#f0f1ff] text-[#2b1c50] antialiased">
 
-        <!-- Header -->
-        <header class="flex justify-between items-center px-6 py-4 bg-[#2b1c50] text-white shadow">
-            <h1 class="text-xl font-bold">TicketIn</h1>
+        <!-- NAVBAR -->
+        <header class="fixed top-0 left-0 w-full z-50 bg-[#2b1c50] text-white px-6 py-4 shadow flex justify-between items-center">
+           <div class="text-2xl font-bold tracking-tight">
+                <a href="{{ route('index') }}">{{ config('app.name') }}</a>
+            </div>
             <nav class="space-x-4">
             </nav>
         </header>
