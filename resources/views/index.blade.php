@@ -21,8 +21,6 @@
             <div class="text-2xl font-bold tracking-tight">
                 <a href="{{ route('index') }}">{{ config('app.name') }}</a>
             </div>
-        <header class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-            <div class="text-2xl font-bold tracking-tight">{{config('app.name')}}</div>
             <nav class="space-x-4">
                 <a href="{{ route('login') }}" class="text-sm hover:text-indigo-300">Login</a>
                 <a href="{{ route('register') }}" class="text-sm bg-white text-[#2b1c50] font-semibold px-4 py-2 rounded hover:bg-[#f0f1ff] transition">Sign up</a>
