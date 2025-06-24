@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Department;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -31,6 +32,7 @@ class UserFactory extends Factory
             'email_verified_at' => fake()->optional()->dateTimeBetween('-1 year', 'now'),
             'password' => static::$password ??= Hash::make('password'),
             'role' => fake()->randomElement(['user', 'agent', 'admin']),
+            'department_id' => Department::inRandomOrder()->first()?->id ?? Department::factory(),
             'created_at' => $random_date,
             'updated_at' => $random_date,
         ];

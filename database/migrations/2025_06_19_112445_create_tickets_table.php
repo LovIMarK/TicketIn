@@ -17,8 +17,10 @@ return new class extends Migration
             $table->text('description');
             $table->enum('status', ['open', 'in_progress','resolved', 'closed'])->default('open');
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent() ->useCurrentOnUpdate();
+
 
             $table->foreignId('user_id')
             ->constrained('users')

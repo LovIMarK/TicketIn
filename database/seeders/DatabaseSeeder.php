@@ -9,6 +9,7 @@ use Database\Seeders\UserSeeder;
 use Database\Seeders\TicketSeeder;
 use Database\Seeders\MessageSeeder;
 use Database\Seeders\AttachementSeeder;
+use Database\Seeders\DepartmentSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
+            DepartmentSeeder::class,
             UserSeeder::class,
             TicketSeeder::class,
             MessageSeeder::class,

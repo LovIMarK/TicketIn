@@ -21,11 +21,6 @@ return new class extends Migration
                 ->constrained('tickets')
                 ->onDelete('cascade');
 
-            $table->foreignId('user_id')
-                ->constrained('users')
-                ->onDelete('cascade');
-
-
         });
     }
 
