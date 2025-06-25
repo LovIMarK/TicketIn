@@ -23,7 +23,7 @@ class AttachementFactory extends Factory
             'file_name' => fake()->word() . '.jpg',
             'file_path' => fake()->imageUrl(),
             'file_type' => 'image/jpeg',
-            'message_id' => Message::factory(),
+            'message_id' => Message::inRandomOrder()->value('id') ?? Message::factory(),
 
             'created_at' => $random_date,
             'updated_at' => $random_date,

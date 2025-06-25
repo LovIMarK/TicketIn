@@ -24,7 +24,7 @@ class MessageFactory extends Factory
 
         return [
             'content' => fake()->paragraph(),
-            'ticket_id' => Ticket::factory(),
+            'ticket_id' => Ticket::inRandomOrder()->value('id') ?? Ticket::factory(),
             'created_at' => $random_date,
             'updated_at' => $random_date,
         ];

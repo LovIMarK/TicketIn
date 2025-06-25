@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DepartmentSeeder::class,
             UserSeeder::class,
-            TicketSeeder::class,
             MessageSeeder::class,
             AttachementSeeder::class,
+            TicketSeeder::class,
         ]);
 
         // \App\Models\User::factory(10)->create();
