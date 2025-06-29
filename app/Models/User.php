@@ -33,6 +33,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
