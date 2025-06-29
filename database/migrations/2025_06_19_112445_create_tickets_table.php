@@ -15,11 +15,13 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title',200);
+            $table->uuid('uuid')->unique();
             $table->enum('priority', ['low', 'medium', 'high'])->nullable()->default(null);
-            $table->enum('status', ['open', 'in_progress', 'closed'])->default('open');
+            $table->enum('status', ['open', 'in_progress', 'resolved', 'closed'])->default('open');
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent() ->useCurrentOnUpdate();
+            $table->timestamp('closed_at')->nullable();
 
 
             $table->foreignId('user_id')
