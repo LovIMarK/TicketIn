@@ -25,9 +25,10 @@ class TicketFactory extends Factory
         $random_date = fake()->dateTimeBetween('-1 year', 'now');
 
         $priority = fake()->optional()->randomElement(['low', 'medium', 'high']);
-        $status = $priority === null ? 'open' : fake()->randomElement(['open', 'in_progress', 'closed']);
+        $status = $priority === null ? 'open' : fake()->randomElement(['open', 'in_progress', 'resolved', 'closed']);
         return [
             'title' => fake()->sentence(),
+            'uuid' => fake()->uuid(),
             'priority' => $priority,
             'status' => $status,
             'user_id' => User::where('role', 'user')->inRandomOrder()->first()->id,
@@ -36,6 +37,7 @@ class TicketFactory extends Factory
                 : User::where('role', 'agent')->inRandomOrder()->first()?->id,
             'created_at' => $random_date,
             'updated_at' => $random_date,
+            'closed_at' => $status === 'closed' ? fake()->dateTimeBetween($random_date, 'now') : null,
         ];
     }
     public function configure()

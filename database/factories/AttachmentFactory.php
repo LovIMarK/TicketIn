@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Message;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Attachement>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Attachment>
  */
-class AttachementFactory extends Factory
+class AttachmentFactory extends Factory
 {
     /**
      * Define the model's default state.
