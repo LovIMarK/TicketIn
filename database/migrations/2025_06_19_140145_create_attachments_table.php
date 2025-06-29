@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attachements', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('file_name', 255);
             $table->string('file_path', 512);
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attachements');
+        Schema::dropIfExists('attachments');
     }
 };
