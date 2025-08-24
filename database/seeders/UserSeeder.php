@@ -2,14 +2,26 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 
+
+/**
+ * Seeds the users table with a role distribution.
+ *
+ * Generates:
+ * - 10 regular users
+ * - 5 agents
+ * - 2 admins (explicitly assigned to department_id = 1)
+ *
+ * Uses model factories to create realistic records.
+ */
 class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
     public function run(): void
     {

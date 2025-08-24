@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\TicketSeeder;
@@ -11,10 +9,22 @@ use Database\Seeders\MessageSeeder;
 use Database\Seeders\AttachmentSeeder;
 use Database\Seeders\DepartmentSeeder;
 
+
+/**
+ * Primary database seeder.
+ *
+ * Orchestrates domain seeders to populate core tables for development/testing.
+ * Adjust volumes and data shapes in the individual seeder/factory classes.
+ */
 class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     *
+     * Calls child seeders in sequence. Ensure seeder/factory logic accounts for
+     * foreign key dependencies (e.g., users/departments before tickets/messages).
+     *
+     * @return void
      */
     public function run(): void
     {
