@@ -6,14 +6,52 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
+/**
+ * Ticket model.
+ *
+ * Represents a support ticket with status/priority and an optional assigned agent.
+ * Uses UUIDs for route model binding (see getRouteKeyName()).
+ *
+ * Allowed values:
+ * - status: open | closed | in_progress
+ * - priority: low | medium | high | null
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $uuid
+ * @property int $user_id
+ * @property string|null $status
+ * @property string|null $priority
+ * @property int|null $agent_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ */
 class Ticket extends Model
 {
 
+    protected $fillable = [
+        'title',
+        'uuid',
+        'user_id',
+        'status',
+        'priority',
+        'agent_id',
+    ];
+
     /**
-     * Get the CSS classes for the priority dot indicator.
+     * CSS classes for the small priority dot indicator.
+     *
+     * Closed tickets are shown in gray regardless of priority.
+     *
+     * @return string
      */
     public function priorityDotStyle(): string
     {
+
+        if($this->status === 'closed') {
+            return 'inline-block w-2.5 h-2.5 rounded-full bg-gray-400 ring-1 ring-gray-500/30';
+        }
+
         return match ($this->priority) {
             'low' => 'inline-block w-2.5 h-2.5 rounded-full bg-green-400 ring-1 ring-green-500/30',
             'medium' => 'inline-block w-2.5 h-2.5 rounded-full bg-yellow-400 ring-1 ring-yellow-500/30',
@@ -22,8 +60,10 @@ class Ticket extends Model
         };
     }
 
-    /**
-     * Get the CSS classes for the priority badge.
+     /**
+     * CSS classes for the priority badge.
+     *
+     * @return string
      */
     public function priorityBadgeStyle(): string
     {
@@ -40,7 +80,9 @@ class Ticket extends Model
     }
 
     /**
-     * Get the CSS classes for the status badge.
+     * CSS classes for the status badge.
+     *
+     * @return string
      */
     public function statusBadgeStyle(): string
     {
@@ -56,8 +98,10 @@ class Ticket extends Model
         };
     }
 
-    /**
-     * Get messages associated with the ticket.
+     /**
+     * Messages associated with the ticket.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Message>
      */
     public function messages()
     {
@@ -65,7 +109,9 @@ class Ticket extends Model
     }
 
     /**
-     * Get the first message of the ticket.
+     * First (oldest) message of the ticket.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<\App\Models\Message>
      */
     public function firstMessage()
     {
@@ -73,7 +119,9 @@ class Ticket extends Model
     }
 
     /**
-     * Get the user who created the ticket.
+     * User who created the ticket.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Ticket>
      */
     public function user()
     {
@@ -81,13 +129,20 @@ class Ticket extends Model
     }
 
     /**
-     * Get the agent assigned to the ticket.
+     * Agent assigned to the ticket (if any).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Ticket>
      */
     public function agent()
     {
         return $this->belongsTo(User::class, 'agent_id');
     }
 
+    /**
+     * Use UUIDs for route model binding.
+     *
+     * @return string
+     */
     public function getRouteKeyName(): string
     {
         return 'uuid';
