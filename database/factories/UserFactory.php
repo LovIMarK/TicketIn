@@ -7,23 +7,36 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Department;
 
 /**
+ * User factory.
+ *
+ * Generates realistic user records for testing/seeding:
+ * - Random name and unique safe email
+ * - Optional email verification timestamp
+ * - Hashed default password (memoized for performance)
+ * - Role in {user, agent, admin}
+ * - Department chosen from existing records or created via factory
+ *
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
 class UserFactory extends Factory
 {
     /**
-     * The current password being used by the factory.
+     * Memoized hashed password used by the factory.
+     *
+     * @var string|null
      */
     protected static ?string $password;
 
     /**
      * Define the model's default state.
      *
+     * Timestamps are kept consistent and within the last year.
+     *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
-        // Generate a random date between 1 year ago and now
+        // Random date between 1 year ago and now (used for created_at/updated_at)
         $random_date = fake()->dateTimeBetween('-1 year', 'now');
 
         return [
@@ -40,6 +53,8 @@ class UserFactory extends Factory
 
     /**
      * Indicate that the model's email address should be unverified.
+     *
+     * @return static
      */
     public function unverified(): static
     {
