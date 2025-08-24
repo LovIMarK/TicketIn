@@ -5,10 +5,30 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
+
+/**
+ * Create the tickets table.
+ *
+ * Columns:
+ * - id        : bigint primary key
+ * - title     : ticket title (max 200 chars)
+ * - uuid      : unique identifier used for routing/binding
+ * - priority  : low | medium | high | null
+ * - status    : open | in_progress | resolved | closed (default: open)
+ * - created_at/updated_at with CURRENT_TIMESTAMP and ON UPDATE
+ * - closed_at : nullable timestamp for closed tickets
+ * - user_id   : creator (FK -> users.id, cascade on delete)
+ * - agent_id  : assigned agent (nullable FK -> users.id, set null on delete)
+ *
+ * Additional constraint:
+ * - chk_priority_status: if priority is null, status must be 'open'
+ */
 return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up(): void
     {
@@ -25,16 +45,16 @@ return new class extends Migration
 
 
             $table->foreignId('user_id')
-            ->constrained('users')
-            ->onDelete('cascade');
+            ->constrained()
+            ->cascadeOnDelete();
 
             $table->foreignId('agent_id')
             ->nullable()
             ->constrained('users')
-            ->onDelete('set null');
+            ->nullOnDelete();
 
         });
-
+        // Enforce business rule: tickets without a priority must remain 'open'.
         DB::statement('
             ALTER TABLE tickets
             ADD CONSTRAINT chk_priority_status
@@ -48,6 +68,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down(): void
     {

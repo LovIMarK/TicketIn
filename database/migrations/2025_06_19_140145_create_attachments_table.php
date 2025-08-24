@@ -4,10 +4,25 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
+/**
+ * Create the attachments table.
+ *
+ * Columns:
+ * - id         : bigint primary key
+ * - file_name  : original filename (max 255)
+ * - file_path  : storage path (max 512)
+ * - file_type  : MIME type (max 100)
+ * - created_at : defaults to CURRENT_TIMESTAMP
+ * - updated_at : CURRENT_TIMESTAMP with ON UPDATE
+ * - message_id : FK -> messages.id (cascade on delete)
+ */
 return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up(): void
     {
@@ -20,13 +35,15 @@ return new class extends Migration
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             $table->foreignId('message_id')
-                ->constrained('messages')
-                ->onDelete('cascade');
+                ->constrained()
+                ->cascadeOnDelete();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down(): void
     {
