@@ -1,4 +1,4 @@
-<div class="relative bg-[#f0f1ff] text-[#2b1c50] p-6 rounded-xl shadow-xl border border-[#2b1c50]">
+<div class="relative bg-white text-[#2b1c50] p-6 rounded-xl shadow-xl border border-[#2b1c50]">
 
     <!-- Priority dot (top left) -->
     <span class="{{ $ticket->priorityDotStyle() }} absolute top-4 left-4"></span>
@@ -31,7 +31,7 @@
 
     <!-- CTA -->
     <div class="mt-6 pl-6">
-        <a href="{{ route('tickets.show', $ticket) }}"
+        <a href="{{ route('admin.tickets.show', $ticket) }}"
            class="inline-block px-5 py-2 bg-[#2b1c50] text-white rounded hover:bg-indigo-700 transition">
             Open Full Ticket
         </a>
